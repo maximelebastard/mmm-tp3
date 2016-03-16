@@ -5,6 +5,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -12,10 +14,11 @@ import android.view.View;
 
 import edu.istic.mmm.mmmtp3.R;
 import edu.istic.mmm.mmmtp3.domain.Region;
+import edu.istic.mmm.mmmtp3.fragment.LocateFragment;
 import edu.istic.mmm.mmmtp3.fragment.RegionsDetailFragment;
 import edu.istic.mmm.mmmtp3.fragment.RegionsListFragment;
 
-public class RegionsListActivity extends AppCompatActivity implements RegionsDetailFragment.OnFragmentInteractionListener, RegionsListFragment.OnFragmentInteractionListener {
+public class RegionsListActivity extends AppCompatActivity implements RegionsDetailFragment.OnFragmentInteractionListener, RegionsListFragment.OnFragmentInteractionListener, LocateFragment.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +42,7 @@ public class RegionsListActivity extends AppCompatActivity implements RegionsDet
         if (findViewById(R.id.vins_details_fragment) != null) {
             RegionsDetailFragment detailFragment = new RegionsDetailFragment();
             detailFragment.setArguments(getIntent().getExtras());
-            getFragmentManager().beginTransaction()
+            getSupportFragmentManager().beginTransaction()
                     .add(R.id.vins_details_fragment, detailFragment).commit();
         }
     }
@@ -50,7 +53,7 @@ public class RegionsListActivity extends AppCompatActivity implements RegionsDet
     }
 
     public void onRegionSelected(Region region) {
-        RegionsDetailFragment viewer = (RegionsDetailFragment) getFragmentManager()
+        RegionsDetailFragment viewer = (RegionsDetailFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.vins_details_fragment);
 
         if (viewer == null) {
@@ -60,6 +63,20 @@ public class RegionsListActivity extends AppCompatActivity implements RegionsDet
             startActivity(showContent);
         } else {
             viewer.updateUrl(region.getUrl());
+        }
+    }
+
+    public void onLocateRequested(Region region) {
+        // If tablet
+        if (findViewById(R.id.vins_details_fragment) != null) {
+            LocateFragment detailFragment = new LocateFragment();
+            detailFragment.setArguments(getIntent().getExtras());
+
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.vins_details_fragment, detailFragment); // f1_container is your FrameLayout container
+            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+            ft.addToBackStack(null);
+            ft.commit();
         }
     }
 }

@@ -1,16 +1,19 @@
 package edu.istic.mmm.mmmtp3.fragment;
 
-import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
+import android.widget.Button;
 
 import edu.istic.mmm.mmmtp3.R;
+import edu.istic.mmm.mmmtp3.activity.RegionsListActivity;
+import edu.istic.mmm.mmmtp3.domain.Region;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -26,6 +29,7 @@ public class RegionsDetailFragment extends Fragment {
     // UI Components
     private View fragmentView;
     private WebView webview;
+    private Button btLocate;
 
     private String regionName;
 
@@ -54,6 +58,7 @@ public class RegionsDetailFragment extends Fragment {
 
         // UI Components
         webview = (WebView) fragmentView.findViewById(R.id.regions_detail_webview);
+        btLocate = (Button) fragmentView.findViewById(R.id.bt_locate);
 
         // Read intent bundle and load url if given
         Bundle extras = getActivity().getIntent().getExtras();
@@ -64,7 +69,20 @@ public class RegionsDetailFragment extends Fragment {
             }
         }
 
+        // Locate handler
+        btLocate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RegionsDetailFragment.this.handleLocateBtClick();
+            }
+        });
+
         return fragmentView;
+    }
+
+    private void handleLocateBtClick() {
+        RegionsListActivity activity = (RegionsListActivity) getActivity();
+        activity.onLocateRequested(new Region("Toto"));
     }
 
     @Override

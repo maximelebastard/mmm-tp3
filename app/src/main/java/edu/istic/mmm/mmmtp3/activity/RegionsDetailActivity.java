@@ -26,7 +26,7 @@ public class RegionsDetailActivity extends AppCompatActivity implements RegionsD
         // Load Fragment
         RegionsDetailFragment detailFragment = new RegionsDetailFragment();
         detailFragment.setArguments(getIntent().getExtras());
-        getFragmentManager().beginTransaction()
+        getSupportFragmentManager().beginTransaction()
                 .add(R.id.vins_details_fragment, detailFragment).commit();
 
     }

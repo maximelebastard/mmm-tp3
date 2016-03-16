@@ -7,6 +7,14 @@
     <WebView
         android:id="@+id/regions_detail_webview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></WebView>
+        android:layout_height="match_parent" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/bt_locate_label"
+        android:id="@+id/bt_locate"
+        android:layout_gravity="right|bottom" />
+
 
 </FrameLayout>
