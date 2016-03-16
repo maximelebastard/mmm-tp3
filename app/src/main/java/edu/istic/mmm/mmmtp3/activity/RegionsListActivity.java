@@ -41,8 +41,6 @@ public class RegionsListActivity extends AppCompatActivity implements RegionsDet
             detailFragment.setArguments(getIntent().getExtras());
             getFragmentManager().beginTransaction()
                     .add(R.id.vins_details_fragment, detailFragment).commit();
-
-            detailFragment.updateUrl("http://google.com");
         }
     }
 
@@ -58,7 +56,7 @@ public class RegionsListActivity extends AppCompatActivity implements RegionsDet
         if (viewer == null) {
             Intent showContent = new Intent(getApplicationContext(),
                     RegionsDetailActivity.class);
-            showContent.setData(Uri.parse(region.getUrl()));
+            showContent.putExtra(RegionsDetailFragment.ARG_REGIONNAME, region.getUrl());
             startActivity(showContent);
         } else {
             viewer.updateUrl(region.getUrl());

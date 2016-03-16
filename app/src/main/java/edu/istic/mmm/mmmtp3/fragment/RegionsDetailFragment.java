@@ -44,9 +44,6 @@ public class RegionsDetailFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            regionName = getArguments().getString(ARG_REGIONNAME);
-        }
     }
 
     @Override
@@ -58,14 +55,16 @@ public class RegionsDetailFragment extends Fragment {
         // UI Components
         webview = (WebView) fragmentView.findViewById(R.id.regions_detail_webview);
 
-        return fragmentView;
-    }
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+        // Read intent bundle and load url if given
+        Bundle extras = getActivity().getIntent().getExtras();
+        if(extras != null) {
+            String url = getActivity().getIntent().getExtras().getString(ARG_REGIONNAME);
+            if(url != null) {
+                updateUrl(url);
+            }
         }
+
+        return fragmentView;
     }
 
     @Override
